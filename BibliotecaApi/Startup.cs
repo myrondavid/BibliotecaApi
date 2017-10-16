@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BibliotecaApi.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Razor.Language.Intermediate;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,8 +27,8 @@ namespace BibliotecaApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("BibliotecaTeste"));
-            //services.AddDbContext<DataContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("TesteCon")));
+            //services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("BibliotecaTeste"));
+            services.AddDbContext<DataContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("TesteCon"))).AddEntityFrameworkSqlServer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,5 +41,7 @@ namespace BibliotecaApi
 
             app.UseMvc();
         }
+
+        
     }
 }
